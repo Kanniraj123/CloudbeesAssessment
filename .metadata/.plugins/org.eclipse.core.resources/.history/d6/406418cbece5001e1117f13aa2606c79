@@ -1,0 +1,9 @@
+package com.ticketbook.dto;
+
+public class PurchaseRequest {
+
+    private String from;
+    private String to;
+    private User user;
+    
+}

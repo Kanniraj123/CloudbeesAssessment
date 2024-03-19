@@ -1,0 +1,12 @@
+1710844177965	Copy package
+1710844185431	Copy package
+1710850406010	Rename field 'ticketRepository'
+1710851537355	Rename field 'ticketService'
+1710857913129	Rename package 'com.ticketbook.controller'
+1710857927870	Rename package 'com.ticketbook.dto'
+1710857940324	Rename package 'com.ticketbook.repo'
+1710857950891	Rename package 'com.ticketbook.service'
+1710858757157	Move compilation unit
+1710858850607	Move compilation unit
+1710868808629	Rename field 'ticketRepository'
+1710868899329	Rename field 'ticketService'

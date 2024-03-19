@@ -1,0 +1,38 @@
+package com.ticketbook.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class TicketBookService {
+	@Autowired
+    private TicketRepository ticketRepository;
+
+    public Ticket purchaseTicket(String from, String to, User user) {
+        Ticket ticket = new Ticket(from, to, user, 5, assignSeat(), LocalDateTime.now());
+        return ticketRepository.save(ticket);
+    }
+
+    public Ticket viewReceipt(String email) {
+        return ticketRepository.findByUserEmail(email);
+    }
+
+    public List<Ticket> viewAllocation(String section) {
+        return ticketRepository.findBySeatSection(section);
+    }
+
+    public void removeUser(String email) {
+        ticketRepository.deleteByUserEmail(email);
+    }
+
+    public void modifySeat(String email, String newSection, int newSeatNumber) {
+        Ticket ticket = ticketRepository.findByUserEmail(email);
+        if (ticket != null) {
+            ticket.setSeatSection(newSection);
+            ticket.setSeatNumber(newSeatNumber);
+            ticketRepository.save(ticket);
+        }
+    }
+
+    private String assignSeat() {
+        // Logic to assign seat number
+    }
+}

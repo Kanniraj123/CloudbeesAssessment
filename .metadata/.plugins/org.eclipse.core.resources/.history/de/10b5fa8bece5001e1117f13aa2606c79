@@ -1,0 +1,16 @@
+package com.ticketbook.dto;
+
+import java.time.LocalDateTime;
+
+public class TicketResponse {
+
+    private String from;
+    private String to;
+    private User user;
+    private int pricePaid;
+    private String seatSection;
+    private int seatNumber;
+    private LocalDateTime purchaseTime;
+
+   
+}

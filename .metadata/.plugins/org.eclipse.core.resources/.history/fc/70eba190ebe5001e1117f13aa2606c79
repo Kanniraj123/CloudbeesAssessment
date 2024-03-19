@@ -1,0 +1,45 @@
+package com.ticketbook.dto;
+
+import javax.persistence.*;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Setter
+@Getter
+public class Ticket {
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String from;
+    private String to;
+
+    @ManyToOne
+    private User user;
+
+    private int pricePaid;
+    private String seatSection;
+    private int seatNumber;
+    private LocalDateTime purchaseTime;
+	public Ticket(String from, String to, User user, int pricePaid, String seatSection, int seatNumber,
+			LocalDateTime purchaseTime) {
+		super();
+		this.from = from;
+		this.to = to;
+		this.user = user;
+		this.pricePaid = pricePaid;
+		this.seatSection = seatSection;
+		this.seatNumber = seatNumber;
+		this.purchaseTime = purchaseTime;
+	}
+    
+    
+  
+    
+}
+

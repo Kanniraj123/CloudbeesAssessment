@@ -1,0 +1,37 @@
+package com.ticketbook.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class TicketBookController{
+    private Map<String, Ticket> tickets = new HashMap<>();
+    private Integer seatCounter = new Integer(1);
+
+    @PostMapping("/purchase_ticket")
+    public ResponseEntity<Ticket> purchaseTicket(@RequestBody PurchaseRequest request) {
+        Ticket ticket = new Ticket(request.getFrom(), request.getTo(), request.getUser(), 5,
+                                   assignSeat(), LocalDateTime.now());
+        tickets.put(request.getUser().getEmail(), ticket);
+        return ResponseEntity.ok(ticket);
+    }
+
+    private String assignSeat() {
+        int seatNumber = seatCounter.getAndIncrement();
+        return seatNumber <= 50 ? "A" + seatNumber : "B" + (seatNumber - 50);
+    }
+    
+    @GetMapping("/view_receipt/{email}")
+    public ResponseEntity<Ticket> viewReceipt(@PathVariable String email) {
+        Ticket ticket = tickets.get(email);
+        if (ticket != null) {
+            return ResponseEntity.ok(ticket);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+}

@@ -1,0 +1,59 @@
+package com.ticketbook.service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.ticketbook.main.dto.Ticket;
+import com.ticketbook.main.dto.User;
+import com.ticketbook.repo.TicketBookRepository;
+
+public class TicketBookService {
+	@Autowired
+    private TicketBookRepository ticketBookRepository;
+
+    public Ticket purchaseTicket(String from, String to, User user) {
+    	String seatPick = assignSeat();
+    	String seatSec = String.valueOf(seatPick.charAt(0));
+    	int seatnum = Integer.parseInt(seatPick.substring(1));
+        Ticket ticket = new Ticket(from, to, user, 5,seatnum,seatSec, LocalDateTime.now());
+        return ticketBookRepository.save(ticket);
+    }
+
+    public Ticket viewReceipt(String email) {
+        return ticketBookRepository.findByUserEmail(email);
+    }
+
+    public List<Ticket> viewAllocation(String section) {
+        return ticketBookRepository.findBySeatSection(section);
+    }
+
+    public void removeUser(String email) {
+        ticketBookRepository.deleteByUserEmail(email);
+    }
+
+    public void modifySeat(String email, String newSection, int newSeatNumber) {
+        Ticket ticket = ticketBookRepository.findByUserEmail(email);
+        if (ticket != null) {
+            ticket.setSeatSection(newSection);
+            ticket.setSeatNumber(newSeatNumber);
+            ticketBookRepository.save(ticket);
+        }
+    }
+
+    private String assignSeat() {
+    	int nextSeatNumber = ticketBookRepository.findMaxSeatNumberBySection("A") + 1;
+        if (nextSeatNumber <= 50) {
+            return "A" + nextSeatNumber;
+        } else {
+            nextSeatNumber = ticketBookRepository.findMaxSeatNumberBySection("B") + 1;
+            if (nextSeatNumber <= 50) {
+                return "B" + (nextSeatNumber - 50);
+            } else {
+                
+                return "N/A";
+            }
+        }
+    }
+}

@@ -1,0 +1,5 @@
+package com.ticketbook.repo;
+
+public class TicketBookRepository {
+
+}

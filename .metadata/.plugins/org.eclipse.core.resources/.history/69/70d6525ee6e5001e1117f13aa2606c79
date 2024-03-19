@@ -1,0 +1,5 @@
+package com.ticketbook.dto;
+
+public class ModifySeatRequest {
+
+}

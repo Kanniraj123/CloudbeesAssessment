@@ -1,0 +1,10 @@
+package com.ticketbook.dto;
+
+public class ModifySeatRequest {
+
+    private String email;
+    private String newSection;
+    private int newSeatNumber;
+
+}
+
